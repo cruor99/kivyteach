@@ -109,7 +109,7 @@ class KivyBirdApp(App):
         self.spacing = 0.5 * self.root.width
         self.background = self.root.ids.background
         self.bird = self.root.ids.bird
-        Clock.schedule_interval(self.update, 1.0/60.0)
+        Clock.schedule_interval(self.update, 1.0/500.0)
         Window.bind(on_key_down=self.on_key_down)
         self.background.on_touch_down = self.user_action
 
