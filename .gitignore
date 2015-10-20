@@ -1,5 +1,5 @@
 
-.buildozer/*
+*/.buildozer/*
 .idea/*
 bin/*
 *.pyc
