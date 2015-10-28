@@ -1,0 +1,73 @@
+#<Bird>:
+#    canvas.before:
+#        PushMatrix
+#        Rotate:
+#            angle: root.angle
+#            axis: (0, 0, 1)
+#            origin: root.center
+
+#    canvas.after:
+#        PopMatrix
+
+<Pipe>:
+    canvas:
+        Rectangle:
+            pos: (self.x + 4, self.FLOOR)
+            size: (56, self.lower_len)
+            texture: self.tx_sandstone_1
+            tex_coords: self.lower_coords
+
+        Rectangle:
+            pos: (self.x, self.FLOOR + self.lower_len)
+            size: (64, self.PTOP_HEIGHT)
+            texture: self.tx_sandstone_1
+
+        Rectangle:
+            pos: (self.x +4, self.upper_y)
+            size: (56, self.upper_len)
+            texture: self.tx_sandstone_1
+            tex_coords: self.upper_coords
+
+        Rectangle:
+            pos: (self.x, self.upper_y - self.PTOP_HEIGHT)
+            size: (64, self.PTOP_HEIGHT)
+            texture: self.tx_sandstone_1
+    size_hint: (None, 1)
+    width: 64
+
+
+FloatLayout:
+    id: main_layout
+    Background:
+        id: background
+        canvas:
+            Rectangle:
+                pos: self.pos
+                size: (self.width, self.height)
+                texture: self.tx_background
+    Bird:
+        id: bird
+        pos: (250, 250)
+#        pos_hint: {'center_x': 0.3333, 'center_y': 0.6}
+        size: (50, 50)
+        size_hint: (None, None)
+        source: 'images/spaceship1_big2.png'
+    Fish:
+        id: fish
+        size: (100, 50)
+        size_hint: (None, None)
+        pos: (root.width- 50, 250)
+        source: 'images/goldfish.png'
+    Label:
+        id: score_label
+        text: "0"
+        font_size: 75
+        y: 250
+    Label:
+        id: gameover_label
+        text: ""
+        font_size: 50
+    Label:
+        id: highscore_label
+        font_size: 50
+        y: -250
