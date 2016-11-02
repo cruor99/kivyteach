@@ -1,0 +1,74 @@
+<CalcButton@Button>:
+    font_size: 32
+
+
+
+<KalkulatorRoot>:
+    id: calculator
+    rows: 5
+    padding: 10
+    spacing: 10
+
+    BoxLayout:
+        TextInput:
+            id: entry
+            font_size: 32
+            multiline: False
+
+
+    BoxLayout:
+        spacing: 10
+        CalcButton:
+            text: "7"
+            on_press: entry.text += self.text
+        CalcButton:
+            text: "8"
+            on_press: entry.text += self.text
+        CalcButton:
+            text: "9"
+            on_press: entry.text += self.text
+        CalcButton:
+            text: "+"
+            on_press: entry.text += self.text
+    BoxLayout:
+        spacing: 10
+        CalcButton:
+            text: "4"
+            on_press: entry.text += self.text
+        CalcButton:
+            text: "5"
+            on_press: entry.text += self.text
+        CalcButton:
+            text: "6"
+            on_press: entry.text += self.text
+        CalcButton:
+            text: "-"
+            on_press: entry.text += self.text
+    BoxLayout:
+        spacing: 10
+        CalcButton:
+            text: "1"
+            on_press: entry.text += self.text
+        CalcButton:
+            text: "2"
+            on_press: entry.text += self.text
+        CalcButton:
+            text: "3"
+            on_press: entry.text += self.text
+        CalcButton:
+            text: "*"
+            on_press: entry.text += self.text
+    BoxLayout:
+        spacing: 10
+        CalcButton:
+            text: "Clear"
+            on_press: entry.text = ""
+        CalcButton:
+            text: "0"
+            on_press: entry.text += self.text
+        CalcButton:
+            text: "="
+            on_press: root.calculation(entry.text)
+        CalcButton:
+            text: "/"
+            on_press: entry.text += self.text
