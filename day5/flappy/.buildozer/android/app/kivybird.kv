@@ -1,0 +1,52 @@
+<Bird>:
+    canvas.before:
+        PushMatrix
+        Rotate:
+            angle: root.angle
+            axis: (0, 0, 1)
+            origin: root.center
+
+    canvas.after:
+        PopMatrix
+
+<Pipe>:
+    canvas:
+        Rectangle:
+            pos: (self.x + 4, self.FLOOR)
+            size: (56, self.lower_len)
+            texture: self.tx_pipe
+            tex_coords: self.lower_coords
+
+        Rectangle:
+            pos: (self.x, self.FLOOR + self.lower_len)
+            size: (64, self.PTOP_HEIGHT)
+            texture: self.tx_ptop
+
+        Rectangle:
+            pos: (self.x +4, self.upper_y)
+            size: (56, self.upper_len)
+            texture: self.tx_pipe
+            tex_coords: self.upper_coords
+
+        Rectangle:
+            pos: (self.x, self.upper_y - self.PTOP_HEIGHT)
+            size: (64, self.PTOP_HEIGHT)
+            texture: self.tx_ptop
+    size_hint: (None, 1)
+    width: 64
+
+
+FloatLayout:
+    Background:
+        id: background
+        canvas:
+            Rectangle:
+                pos: self.pos
+                size: (self.width, self.height)
+                texture: self.tx_background
+    Bird:
+        id: bird
+        pos_hint: {'center_x': 0.3333, 'center_y': 0.6}
+        size: (50, 50)
+        size_hint: (None, None)
+        source: 'images/flappynormal.png'
