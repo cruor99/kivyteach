@@ -3,7 +3,7 @@ from kivy.app import App
 from kivy.clock import Clock
 from kivy.core.image import Image
 from kivy.uix.widget import Widget
-from kivy.properties import ObjectProperty, ListProperty, NumericProperty
+from kivy.properties import ObjectProperty, ListProperty, NumericProperty, StringProperty
 from kivy.properties import AliasProperty
 from kivy.core.window import Window, Keyboard
 from kivy.uix.label import Label
@@ -12,6 +12,7 @@ from kivy.core.audio import SoundLoader
 #legg til her
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import Screen
+from kivy.storage.jsonstore import JsonStore
 
 
 sfx_flap = SoundLoader.load("audio/flap.wav")
@@ -131,9 +132,14 @@ class KivyBirdApp(App):
     playing = False
     score = 0
     scored = False
+    highscore = StringProperty("0")
 
     #legg til her
     def build(self):
+        self.highscorestore = JsonStore("highscore.json")
+        if self.highscorestore.exists("highscore"):
+            print self.highscorestore.get("highscore")["score"]
+            self.highscore = self.highscorestore.get("highscore")["score"]
         return KivyBirdRoot()
 
     # Når ting går over til ScreenManager, må du huske å bytte root.ids til screenen sin ID
@@ -178,6 +184,11 @@ class KivyBirdApp(App):
                 p.scored = False
 
         if self.test_game_over():
+            current_score = self.root.ids.kivybird_screen_manager.get_screen("game_screen").ids.score_label.text
+            #self.highscorestore["highscore"] = {"score": current_score}
+            if int(current_score) > int(self.highscore):
+                self.highscore = current_score
+                self.highscorestore.put("highscore", score=current_score)
             sfx_die.play()
             self.playing = False
 

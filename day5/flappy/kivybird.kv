@@ -55,12 +55,20 @@
 <StartScreen>:
     FloatLayout:
         BoxLayout:
-            size_hint: None, None
+            size_hint: .5, .5
             orientation: "vertical"
             pos_hint: {"center_x": .5, "center_y": .5}
+            BoxLayout:
+                orientation: "horizontal"
+                Label:
+                    text: "Forrige high score"
+                Label:
+                    text: app.highscore
             Button:
                 text: "Start spillet!"
                 on_release: root.manager.current = "game_screen"
+            Button:
+                text: "Do something else"
 
 
 <GameScreen@Screen>:
@@ -75,6 +83,15 @@
         ScoreLabel:
             id: score_label
             pos_hint: {"center_x": .5, "center_y": .9}
+        BoxLayout:
+            size_hint: .3, .3
+            orientation: "horizontal"
+            pos_hint: {"center_x": .2, "center_y": .9}
+            Label:
+                text: "Highscore: "
+            Label:
+                id: highscore_label
+                text: app.highscore
         Bird:
             id: bird
             pos_hint: {'center_x': 0.3333, 'center_y': 0.6}
