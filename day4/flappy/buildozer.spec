@@ -4,7 +4,7 @@
 title = Kivybird
 
 # (str) Package name
-package.name = kivybord
+package.name = myapp
 
 # (str) Package domain (needed for android/ios packaging)
 package.domain = org.test

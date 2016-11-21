@@ -5,7 +5,15 @@ from kivy.uix.widget import Widget
 from kivy.properties import ObjectProperty, ListProperty, NumericProperty
 from kivy.properties import AliasProperty
 from kivy.core.window import Window, Keyboard
+from kivy.uix.label import Label
 from kivy.uix.image import Image as ImageWidget
+from kivy.core.audio import SoundLoader
+
+
+sfx_flap = SoundLoader.load("audio/flap.wav")
+sfx_score = SoundLoader.load("audio/score.wav")
+sfx_die = SoundLoader.load("audio/die.wav")
+sfx_start = SoundLoader.load("audio/start.wav")
 
 import random
 
@@ -59,6 +67,7 @@ class Pipe(BaseWidget):
 
     def __init__(self, **kwargs):
         super(Pipe, self).__init__(**kwargs)
+        self.scored = False
 
         for name in ('pipe', 'ptop'):
             self.load_tileable(name)
@@ -100,18 +109,27 @@ class Bird(ImageWidget):
         self.speed = Bird.ACCEL_JUMP
 
 
+class ScoreLabel(Label):
+    pass
+
+
 class KivyBirdApp(App):
 
     pipes = []
     playing = False
+    score = 0
+    scored = False
 
     def on_start(self):
         self.spacing = 0.5 * self.root.width
         self.background = self.root.ids.background
+        self.score_label = ScoreLabel()
         self.bird = self.root.ids.bird
-        Clock.schedule_interval(self.update, 1.0/500.0)
+        Clock.schedule_interval(self.update, 1.0/60.0)
         Window.bind(on_key_down=self.on_key_down)
         self.background.on_touch_down = self.user_action
+        sfx_start.play()
+        self.background.update(1.0 / 60.0)
 
     def on_key_down(self, window, key, *args):
         if key == Keyboard.keycodes['spacebar']:
@@ -119,15 +137,19 @@ class KivyBirdApp(App):
 
     def user_action(self, *args):
         if not self.playing:
+            sfx_start.play()
             self.bird.gravity_on(self.root.height)
             self.spawn_pipes()
+            self.root.ids.score_label.text = "0"
+            self.score = 0
             self.playing = True
+        sfx_flap.play()
         self.bird.bump()
 
     def update(self, nap):
-        self.background.update(nap)
         if not self.playing:
             return
+        self.background.update(nap)
         self.bird.update(nap)
 
         for p in self.pipes:
@@ -135,8 +157,10 @@ class KivyBirdApp(App):
             if p.x <= -64:
                 p.x += 4 * self.spacing
                 p.ratio = random.uniform(0.25, 0.75)
+                p.scored = False
 
         if self.test_game_over():
+            sfx_die.play()
             self.playing = False
 
     def test_game_over(self):
@@ -153,6 +177,12 @@ class KivyBirdApp(App):
             if (self.bird.y < p.lower_len + 116 or
                     self.bird.y > screen_height - (p.upper_len + 75)):
                 return True
+            if not p.scored and p.x < self.bird.x:
+                p.scored = True
+                sfx_score.play()
+                self.score += 1
+                self.root.ids.score_label.text = str(self.score)
+
         return False
 
     def spawn_pipes(self):
