@@ -122,6 +122,12 @@ class StartScreen(Screen):
     pass
 
 
+class GameScreen(Screen):
+
+    def on_enter(self):
+        self.ids.background.update(1.0/60)
+
+
 class KivyBirdRoot(FloatLayout):
     pass
 
