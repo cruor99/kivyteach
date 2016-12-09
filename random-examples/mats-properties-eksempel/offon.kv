@@ -1,0 +1,52 @@
+
+<OffOnRoot>: #
+
+    FloatLayout:
+        BoxLayout:
+            pos_hint: {'center_x': .5, 'center_y': .4}
+            size_hint: 1.0, .2
+
+            Button:
+                on_release: root.paa_property += 1
+
+            Button:
+                on_release: root.paa_property -= 1
+
+        Label:
+            font_size: 45
+            pos_hint: {'center_x': .25, 'center_y': .4}
+            text: 'plus 1 sec'
+
+        Label:
+            font_size: 45
+            pos_hint: {'center_x': .75, 'center_y': .4}
+            text: 'min 1 sec'
+
+        BoxLayout:
+            size_hint: .5, .15
+            pos_hint: {'center_x': .5, 'center_y': .1}
+
+            Button:
+                on_press:
+
+        Label:
+            id: on
+            size_hint: .95, .1
+            pos_hint: {'center_x': .5, 'center_y': .9}
+            text: str(root.paa_property)
+
+        Label:
+            id: off
+            size_hint: .95, .1
+            pos_hint: {'center_x': .5, 'center_y': .7}
+            text: str(root.av_property)
+
+        Label:
+            font_size: 35
+            pos_hint: {'center_x': .2, 'center_y': .97}
+            text: 'On time'
+
+        Label:
+            font_size: 35
+            pos_hint: {'center_x': .2, 'center_y': .77}
+            text: 'Off time'
