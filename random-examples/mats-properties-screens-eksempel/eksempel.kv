@@ -1,0 +1,75 @@
+EksempelRoot:
+
+<EksempelRoot>:
+    ScreenManager:
+        FirstScreen:
+            id: first_screen
+            name: "first_screen"
+        SecondScreen:
+            id: second_screen
+            name: "second_screen"
+
+<FirstScreen>:
+    FloatLayout:
+        BoxLayout:
+            orientation: "vertical"
+            pos_hint: {"center_x": .5, "center_y": .5}
+            BoxLayout:
+                BoxLayout:
+                    orientation: "horizontal"
+                    Label:
+                        text: "Tallet i denne skjermen:"
+                    Label:
+                        text: str(root.first_number)
+
+            BoxLayout:
+                orientation: "horizontal"
+                Label:
+                    id: hoved_test_label
+                Button:
+                    text: "oppdater hovedtall"
+                    on_release: root.update_hovedtall(int(newnumber.text))
+                TextInput:
+                    id: newnumber
+            BoxLayout:
+                orientation: "horizontal"
+                Label:
+                    id: increment_test_label
+                Button:
+                    text: "Øk tallet"
+                    on_release: root.increment_second_number()
+            Button:
+                text: "Bytt til andre skjermen"
+                on_release: root.manager.current = "second_screen"
+
+<SecondScreen>:
+    FloatLayout:
+        BoxLayout:
+            orientation: "vertical"
+            pos_hint: {"center_x": .5, "center_y": .5}
+            BoxLayout:
+                BoxLayout:
+                    orientation: "horizontal"
+                    Label:
+                        text: "Tallet i denne skjermen:"
+                    Label:
+                        text: str(root.second_number)
+            BoxLayout:
+                orientation: "horizontal"
+                Label:
+                    id: hoved_test_label
+                Button:
+                    text: "oppdater hovedtall"
+                    on_release: root.update_hovedtall(int(newnumber.text))
+                TextInput:
+                    id: newnumber
+            BoxLayout:
+                orientation: "horizontal"
+                Label:
+                    id: increment_test_label
+                Button:
+                    text: "Øk tallet"
+                    on_release: root.increment_first_number()
+            Button:
+                text: "Bytt til første skjermen"
+                on_release: root.manager.current = "first_screen"
